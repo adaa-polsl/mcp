@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Use cases &mdash; IMCP v1.0.0 documentation</title>
+  <title>Use cases &mdash; IMCP v1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=76e2d817"></script>
+        <script src="../../_static/documentation_options.js?v=d29a5c0e"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,6 +58,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Use cases</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#MCP-curve">MCP curve</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#IMCP-curve">IMCP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Compare-MCP-and-IMCP-scores-with-other-metrics">Compare MCP and IMCP scores with other metrics</a></li>
 </ul>
 </li>
 </ul>
@@ -93,10 +94,10 @@
   <section id="Use-cases">
 <h1>Use cases<a class="headerlink" href="#Use-cases" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">imcp</span> <span class="kn">import</span> <span class="n">mcp_score</span><span class="p">,</span> <span class="n">plot_mcp_curve</span><span class="p">,</span> <span class="n">plot_imcp_curve</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">imcp</span> <span class="kn">import</span> <span class="n">mcp_score</span><span class="p">,</span> <span class="n">imcp_score</span><span class="p">,</span> <span class="n">plot_mcp_curve</span><span class="p">,</span> <span class="n">plot_imcp_curve</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -104,13 +105,15 @@
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">GradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_recall_fscore_support</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 </pre></div>
 </div>
 </div>
 <section id="MCP-curve">
 <h2>MCP curve<a class="headerlink" href="#MCP-curve" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -119,7 +122,7 @@
 <span class="n">algorithm</span><span class="p">[</span><span class="s1">&#39;NaiveBayes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;NaiveBayes&#39;</span><span class="p">:</span> <span class="n">algorithm</span><span class="p">[</span><span class="s1">&#39;NaiveBayes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)}</span>
 
-<span class="n">plot_mcp_curve</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span> <span class="c1"># Fig. 3</span>
+<span class="n">plot_mcp_curve</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -131,7 +134,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">area</span> <span class="o">=</span> <span class="n">mcp_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="s1">&#39;NaiveBayes&#39;</span><span class="p">])</span>
@@ -148,7 +151,7 @@ Area under the MCP curve is equal to 0.9312789283247503
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -163,7 +166,7 @@ Area under the MCP curve is equal to 0.9312789283247503
     <span class="n">score</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">scores</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
 
-<span class="n">plot_mcp_curve</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span> <span class="c1"># Fig. 4</span>
+<span class="n">plot_mcp_curve</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -178,7 +181,7 @@ Area under the MCP curve is equal to 0.9312789283247503
 <section id="IMCP-curve">
 <h2>IMCP curve<a class="headerlink" href="#IMCP-curve" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;exp2_1000.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -195,7 +198,7 @@ Area under the MCP curve is equal to 0.9312789283247503
     <span class="n">score</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">scores</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
 
-<span class="n">plot_imcp_curve</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span> <span class="c1"># Fig. 6</span>
+<span class="n">plot_imcp_curve</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -205,6 +208,104 @@ Area under the MCP curve is equal to 0.9312789283247503
 <div class="output_area docutils container">
 <img alt="../../_images/rst_tutorials_use_case_7_0.png" src="../../_images/rst_tutorials_use_case_7_0.png" />
 </div>
+</div>
+</section>
+<section id="Compare-MCP-and-IMCP-scores-with-other-metrics">
+<h2>Compare MCP and IMCP scores with other metrics<a class="headerlink" href="#Compare-MCP-and-IMCP-scores-with-other-metrics" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">algorithms</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;NaiveBayes&#39;</span><span class="p">:</span> <span class="n">GaussianNB</span><span class="p">(),</span>
+             <span class="s1">&#39;RandomForestClassifier&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+             <span class="s1">&#39;GradientBoostingClassifier&#39;</span><span class="p">:</span> <span class="n">GradientBoostingClassifier</span><span class="p">(),</span>
+             <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">SVC</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">),}</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">algorithms</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mcp&#39;</span><span class="p">,</span> <span class="s1">&#39;imcp&#39;</span><span class="p">,</span> <span class="s1">&#39;macro_precision&#39;</span><span class="p">,</span> <span class="s1">&#39;macro_recall&#39;</span><span class="p">,</span> <span class="s1">&#39;macro_f1&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">algorithms</span><span class="p">:</span>
+    <span class="n">algorithms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">score</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;mcp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mcp_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;imcp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">imcp_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;macro_precision&#39;</span><span class="p">,</span> <span class="s1">&#39;macro_recall&#39;</span><span class="p">,</span> <span class="s1">&#39;macro_f1&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">precision_recall_fscore_support</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mcp</th>
+      <th>imcp</th>
+      <th>macro_precision</th>
+      <th>macro_recall</th>
+      <th>macro_f1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>NaiveBayes</th>
+      <td>0.898374</td>
+      <td>0.890323</td>
+      <td>0.915535</td>
+      <td>0.911111</td>
+      <td>0.910714</td>
+    </tr>
+    <tr>
+      <th>RandomForestClassifier</th>
+      <td>0.881336</td>
+      <td>0.873677</td>
+      <td>0.898148</td>
+      <td>0.888889</td>
+      <td>0.887767</td>
+    </tr>
+    <tr>
+      <th>GradientBoostingClassifier</th>
+      <td>0.942036</td>
+      <td>0.932244</td>
+      <td>0.934524</td>
+      <td>0.933333</td>
+      <td>0.933259</td>
+    </tr>
+    <tr>
+      <th>SVC</th>
+      <td>0.791353</td>
+      <td>0.787423</td>
+      <td>0.955556</td>
+      <td>0.955556</td>
+      <td>0.955556</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </section>
 </section>
@@ -220,7 +321,7 @@ Area under the MCP curve is equal to 0.9312789283247503
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>&#169; Copyright 2024.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

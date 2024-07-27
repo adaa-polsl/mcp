@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Code documentation &mdash; IMCP v1.0.0 documentation</title>
+  <title>Code documentation &mdash; IMCP v1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=76e2d817"></script>
+        <script src="../_static/documentation_options.js?v=d29a5c0e"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -217,7 +217,7 @@ All labels must be of the same dtype and share that dtype with y_true labels.</p
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imcp.plot_curve">
-<span class="sig-prename descclassname"><span class="pre">imcp.</span></span><span class="sig-name descname"><span class="pre">plot_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_fig_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(I)MCP</span> <span class="pre">curve(s)'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imcp.plot_curve" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">imcp.</span></span><span class="sig-name descname"><span class="pre">plot_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_fig_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(I)MCP</span> <span class="pre">curve(s)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'samples'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(I)MCP</span> <span class="pre">score'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imcp.plot_curve" title="Link to this definition"></a></dt>
 <dd><p>Plot curves described with given x and y coordinates.
 To plot multiple curves, pass x and y as 2D arrays. Each row will be plotted
 as a separate curve.</p>
@@ -228,6 +228,9 @@ as a separate curve.</p>
 <li><p><strong>y</strong> (<em>array-like</em><em> or </em><em>array</em><em> of </em><em>arrays. Must be</em><em> of </em><em>the same shape as x.</em>)</p></li>
 <li><p><strong>label</strong> (<em>single label</em><em> or </em><em>list</em><em> of </em><em>labels</em><em>, </em><em>which will be displayed on the plot as legend</em>)</p></li>
 <li><p><strong>output_fig_path</strong> (<em>if given</em><em>, </em><em>figure will be saved at this location. If no file extension is given</em><em>,</em>) – png will be used by default. Most backends support png, pdf, ps, eps and svg extensions.</p></li>
+<li><p><strong>fig_title</strong> (<em>title</em><em> of </em><em>the figure.</em>)</p></li>
+<li><p><strong>xlabel</strong> (<em>label</em><em> of </em><em>the x-axis.</em>)</p></li>
+<li><p><strong>ylabel</strong> (<em>label</em><em> of </em><em>the y-axis.</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -294,7 +297,7 @@ All labels must be of the same dtype and share that dtype with y_true labels.</p
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>&#169; Copyright 2024.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

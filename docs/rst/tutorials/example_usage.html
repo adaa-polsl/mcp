@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example Usage &mdash; IMCP v1.0.0 documentation</title>
+  <title>Example Usage &mdash; IMCP v1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=76e2d817"></script>
+        <script src="../../_static/documentation_options.js?v=d29a5c0e"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -97,7 +97,7 @@
   <section id="Example-Usage">
 <h1>Example Usage<a class="headerlink" href="#Example-Usage" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">imcp</span> <span class="kn">import</span> <span class="n">mcp_curve</span><span class="p">,</span> <span class="n">mcp_score</span><span class="p">,</span> <span class="n">plot_mcp_curve</span><span class="p">,</span> <span class="n">imcp_curve</span><span class="p">,</span> <span class="n">imcp_score</span><span class="p">,</span> <span class="n">plot_imcp_curve</span><span class="p">,</span> <span class="n">plot_curve</span>
@@ -116,7 +116,7 @@
 <section id="Single-MCP-curve">
 <h3>Single MCP curve<a class="headerlink" href="#Single-MCP-curve" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -150,7 +150,7 @@ Area under MCP curve: 0.6429
 <h3>Multiple MCP curves<a class="headerlink" href="#Multiple-MCP-curves" title="Link to this heading"></a></h3>
 <p>More plots can be drawn on the same figure to make comparison between curves easier. Example below presents curves calculated for different ways of obtaining class probabilities.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -179,7 +179,7 @@ Area under MCP curve: 0.6429
 Area under MCP curve for LogisticRegression: 0.6429
 Area under MCP curve for RandomForestClassifier: 0.9549
 Area under MCP curve for GradientBoostingClassifier: 0.9927
-Area under MCP curve for SVC: 0.8368
+Area under MCP curve for SVC: 0.8463
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -197,7 +197,7 @@ Area under MCP curve for SVC: 0.8368
 <p>There have been implemented analogous methods for all mcp methods - imcp_curve, imcp_score and plot_imcp_curve.</p>
 <p>Also, in case that user wants to plot, for example, regular curve and imbalanced curve on the same plot, the plot_curve method has been developed. It allows user to plot any number of curves given as arguments in the same style as plot_mcp_curve and plot_imcp_curve. It is also possible to save figure plot with that method after user has specified output figure path.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../../../tests/test_imbalanced_class_probs.csv&#39;</span><span class="p">)</span>
@@ -229,7 +229,7 @@ Area under IMCP curve: 0.7940
 </div>
 <p>Plotting regular MCP and IMCP on the same figure</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcp_x</span><span class="p">,</span> <span class="n">mcp_y</span> <span class="o">=</span> <span class="n">mcp_curve</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">abs_tolerance</span><span class="o">=</span><span class="mf">0.0000001</span><span class="p">)</span>
@@ -260,7 +260,7 @@ Area under IMCP curve: 0.7940
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>&#169; Copyright 2024.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
