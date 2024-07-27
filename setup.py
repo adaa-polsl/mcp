@@ -9,7 +9,7 @@ with io.open(f"{current_path}/README.md", mode="r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="imcp",
-    version="1.0.0",
+    version="1.0.1",
     author="Łukasz Wróbel, Bartosz Piguła",
     description="Imbalanced Multiclass Classification Performance Curve",
     long_description=long_description,

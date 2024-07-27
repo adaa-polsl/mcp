@@ -17,10 +17,10 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = "IMCP"
-copyright = "2023"
+copyright = "2024"
 
 # The full version, including alpha/beta/rc tags
-release = "v1.0.0"
+release = "v1.0.1"
 
 source_suffix = [".rst", ".md"]
 
