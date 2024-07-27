@@ -270,7 +270,7 @@ def plot_mcp_curve(
                 ),
                 decimals=4,
             )
-            label = key + " (AUC={})".format(area)
+            label = key + ", AU(MCP)={}".format(area)
             plot_labels.append(label)
 
             # get data for plotting
@@ -292,11 +292,11 @@ def plot_mcp_curve(
             mcp_score(y_true, y_score, labels=labels, abs_tolerance=abs_tolerance),
             decimals=4,
         )
-        label = "clf1 (AUC={})".format(area)
+        label = "clf1, AU(MCP)={}".format(area)
         plot_labels.append(label)
 
     fig_title = "MCP curves" if len(x) > 1 else "MCP curve"
-    plot_curve(x, y, label=plot_labels, output_fig_path=output_fig_path, fig_title=fig_title)
+    plot_curve(x, y, label=plot_labels, output_fig_path=output_fig_path, fig_title=fig_title, ylabel="MCP score")
 
 
 def plot_imcp_curve(
@@ -347,7 +347,7 @@ def plot_imcp_curve(
                 ),
                 decimals=4,
             )
-            label = key + " (AUC={})".format(area)
+            label = key + ", AU(IMCP)={}".format(area)
             plot_labels.append(label)
 
             # get data for plotting
@@ -369,12 +369,12 @@ def plot_imcp_curve(
             imcp_score(y_true, y_score, labels=labels, abs_tolerance=abs_tolerance),
             decimals=4,
         )
-        label = "clf1 (AUC={})".format(area)
+        label = "clf1, AU(IMCP)={}".format(area)
         plot_labels.append(label)
 
 
     fig_title = "IMCP curves" if len(x) > 1 else "IMCP curve"
-    plot_curve(x, y, label=plot_labels, output_fig_path=output_fig_path, fig_title=fig_title)
+    plot_curve(x, y, label=plot_labels, output_fig_path=output_fig_path, fig_title=fig_title, ylabel="IMCP score")
 
 
 def plot_curve(
@@ -382,7 +382,9 @@ def plot_curve(
     y,
     label: Union[str, List[str]] = None,
     output_fig_path: str = None,
-    fig_title = "(I)MCP curve(s)"
+    fig_title = "(I)MCP curve(s)",
+    xlabel="samples",
+    ylabel="(I)MCP score",
 ):
     """
     Plot curves described with given x and y coordinates.
@@ -396,6 +398,9 @@ def plot_curve(
     label : single label or list of labels, which will be displayed on the plot as legend
     output_fig_path : if given, figure will be saved at this location. If no file extension is given,
         png will be used by default. Most backends support png, pdf, ps, eps and svg extensions.
+    fig_title : title of the figure.
+    xlabel : label of the x-axis.
+    ylabel : label of the y-axis.
     """
     ## parsing inputs
     # dimensions of x and y
@@ -488,7 +493,10 @@ def plot_curve(
     ax.spines.left.set_color(color)
 
     ax.set_xlim([-0.005, 1.001])
+    ax.set_xlabel(xlabel)
+
     ax.set_ylim([-0.005, 1.001])
+    ax.set_ylabel(ylabel)
 
     ax.xaxis.label.set_color(color)
     ax.yaxis.label.set_color(color)
